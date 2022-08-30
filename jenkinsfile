@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+        stage('one') {
+            steps {
+                echo 'Hello world'
+            }
+        }
+
+        stage('Two') {
+            steps {
+                input ('do you want to proceed')
+            }
+        }
+        stage('Three') {
+            parallel {
+                stage('unit test') {
+                    steps {
+                        echo 'Running unit test'
+                    }
+                }
+                stage('Integration test') {
+                    steps {
+                        echo 'run integration test'
+                        sh "docker pull nginx:latest"
+                        }
+                    }
+                }
+            }
+        }
+
+}
